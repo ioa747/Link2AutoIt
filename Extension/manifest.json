@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Link2AutoIt",
+  "description": "Relays browser links and image URLs to AutoIt via Native Messaging.",
+  "version": "3.0",
+  "homepage_url": "https://github.com/ioa747/Link2AutoIt",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "link2autoit@autoit",
+      "data_collection_permissions": {
+        "required": ["browsingActivity", "websiteActivity"]
+      }
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "nativeMessaging",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
