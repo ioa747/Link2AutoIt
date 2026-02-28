@@ -2,6 +2,8 @@
 
 **Link2AutoIt** is a high-performance bridge between Mozilla Firefox and AutoIt. It allows you to capture browser events (Hovers and Clicks) on links and images, sending the data directly to an AutoIt script in real-time.
 
+🔗 link to AutoIt forum: https://www.autoitscript.com/forum/topic/213483-link2autoit-firefox-add-on
+
 ## 🧐 How it Works
 The project uses **Native Messaging** combined with **Shared Memory (IPC)**. This architecture ensures that the AutoIt Listener remains lightweight and persistent, bypassing the limitation where the browser would normally close the host process after every message.
 
