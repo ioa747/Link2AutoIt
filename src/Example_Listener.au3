@@ -2,14 +2,11 @@
 #include <GUIConstantsEx.au3>
 #include "Link2AutoIt.au3"
 
-; Settings must match LinkHost.exe (C++ or Go)
+; Settings must match LinkHost.exe
 Global Const $WM_USER_SIGNAL = 0x0401
 Global Const $LISTENER_TITLE = "Link2AutoIt_Listener"
 
-; Global variable to prevent processing the same URL multiple times in a row
-Global $sLastProcessedUrl = ""
-
-; 1. Create a hidden GUI to catch the Windows Message (Signal)
+; Create a hidden GUI to catch the Windows Message
 Local $hGUI = GUICreate($LISTENER_TITLE)
 GUIRegisterMsg($WM_USER_SIGNAL, "_OnNewDataReceived")
 
@@ -26,8 +23,8 @@ While 1
     EndSwitch
 WEnd
 
-; --- This function triggers AUTOMATICALLY when a link is hovered ---
-Func _OnNewDataReceived($hWnd, $iMsg, $wParam, $lParam)
+;---------------------------------------------------------------------------------------
+Func _OnNewDataReceived($hWnd, $iMsg, $wParam, $lParam) ; This function triggers AUTOMATICALLY when a link is hovered
 
 	; Get the domain first to check the blacklist
     Local $sDomain = _L2A_GetField("domain")
@@ -76,3 +73,4 @@ Func _OnNewDataReceived($hWnd, $iMsg, $wParam, $lParam)
 
     Return $GUI_RUNDEFMSG
 EndFunc
+;---------------------------------------------------------------------------------------
