@@ -19,7 +19,7 @@ Global $g_bFileWriteLog = True
 
 _WL("--- LinkHost Triggered ---")
 
-; --- 1. Read raw data from STDIN (Browser's Native Messaging) ---
+; Read raw data from STDIN (Browser's Native Messaging)
 Local $bRaw = ConsoleRead(0, True)
 
 If BinaryLen($bRaw) > 4 Then
@@ -27,11 +27,11 @@ If BinaryLen($bRaw) > 4 Then
 	Local $sRaw = BinaryToString($bRaw, 4)
 	_WL("Raw Data Received: " & $sRaw)
 
-	; --- 2. Validate the data ---
+	; Validate the data
 	; Check if the payload contains our expected 'action' field
 	If StringInStr($sRaw, '"action"') Then
 
-		; --- 3. Connecting to the Proxy via Shared Memory ---
+		; Connecting to the Proxy via Shared Memory ---
 		Local $hMapping = _WinAPI_OpenFileMapping($sMappingName)
 
 		If $hMapping <> 0 Then
@@ -67,7 +67,7 @@ Else
 	_WL("Error: Received empty or invalid payload from Browser.")
 EndIf
 
-; 4. Required response to keep the browser happy
+; Required response to keep the browser happy
 _ReplyOK()
 
 _WL("--- LinkHost Exiting ---")
@@ -92,12 +92,12 @@ Func _SendSignal()
     Local Const $WM_USER_SIGNAL = 0x0401
     Local Const $sListenerTitle = "Link2AutoIt_Listener"
 
-    ; Εύρεση του Handle του Listener
+    ; Finding the Listener Handle
     Local $hWnd = WinGetHandle($sListenerTitle)
 
     If $hWnd Then
         _WL("Sending signal to Listener (HWND: " & $hWnd & ")")
-        ; Use PostMessage to prevent LinkHost from getting stuck if Listener is busy
+        ; Using PostMessage to prevent LinkHost from getting stuck if the Listener is busy
         DllCall("user32.dll", "bool", "PostMessageW", "hwnd", $hWnd, "uint", $WM_USER_SIGNAL, "wparam", 0, "lparam", 0)
     Else
         _WL("Signal skip: Listener window not found.")
@@ -109,4 +109,3 @@ Func _WL($sMsg)
 	If Not $g_bFileWriteLog Then Return
 	_FileWriteLog(@ScriptDir & "\LinkHost.log", "PID:" & @AutoItPID & " " & $sMsg & @CRLF)
 EndFunc   ;==>_WL
-
