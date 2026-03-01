@@ -17,7 +17,7 @@ Func _GetLastLink()
     Local $sDomain = _L2A_GetDomain()
     Local $sAction = _L2A_GetActionType()
 
-    ; Check if we actually have data
+    ; Check if we have data
     If $sUrl <> "" Then
 		Local $sDisplayUrl = $sUrl
 		If StringLen($sDisplayUrl) > 80 Then $sDisplayUrl = StringLeft($sDisplayUrl, 77) & "..."

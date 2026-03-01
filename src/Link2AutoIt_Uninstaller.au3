@@ -21,22 +21,22 @@ Func _Uninstall()
 
     If $iConfirm <> $IDYES Then Exit
 
-    ; 1. Kill running processes
+    ; Kill running processes
     ProcessClose("Proxy.exe")
     ProcessClose("LinkHost.exe")
     _Log("Processes stopped (if they were running).")
 
-    ; 2. Remove Registry Entries (Native Messaging Host)
+    ; Remove Registry Entries (Native Messaging Host)
     If RegDelete($REG_KEY) Then
         _Log("Native Messaging Registry key removed.")
     EndIf
 
-    ; 3. Remove Extension Registry Entry (if installed permanently)
+    ; Remove Extension Registry Entry (if installed permanently)
     If RegDelete($EXT_REG_KEY, $EXT_ID) Then
         _Log("Extension Registry entry removed.")
     EndIf
 
-    ; 4. Delete Installation Folder
+    ; Delete Installation Folder
     If FileExists($INSTALL_DIR) Then
         If DirRemove($INSTALL_DIR, 1) Then ; 1 = recurse (delete all files)
             _Log("Installation folder deleted: " & $INSTALL_DIR)
