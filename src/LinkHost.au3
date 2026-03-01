@@ -97,7 +97,7 @@ Func _SendSignal()
 
     If $hWnd Then
         _WL("Sending signal to Listener (HWND: " & $hWnd & ")")
-        ; Χρήση PostMessage για να μη "κολλήσει" ο LinkHost αν ο Listener είναι απασχολημένος
+        ; Use PostMessage to prevent LinkHost from getting stuck if Listener is busy
         DllCall("user32.dll", "bool", "PostMessageW", "hwnd", $hWnd, "uint", $WM_USER_SIGNAL, "wparam", 0, "lparam", 0)
     Else
         _WL("Signal skip: Listener window not found.")
@@ -109,3 +109,4 @@ Func _WL($sMsg)
 	If Not $g_bFileWriteLog Then Return
 	_FileWriteLog(@ScriptDir & "\LinkHost.log", "PID:" & @AutoItPID & " " & $sMsg & @CRLF)
 EndFunc   ;==>_WL
+
