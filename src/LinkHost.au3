@@ -115,5 +115,6 @@ Func _WL($sMsg)
     Local $sLogPath = @ScriptDir & "\LinkHost.log"
     ; If the log exceeds 5KB, stop writing.
     If FileGetSize($sLogPath) > 5 * 1024 Then Return
-    _FileWriteLog($sLogPath, "PID:" & @AutoItPID & " " & $sMsg)
+    _FileWriteLog($sLogPath, "PID:" & @AutoItPID & " " & $sMsg & @CRLF)
 EndFunc   ;==>_WL
+
