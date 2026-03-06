@@ -25,7 +25,7 @@ If the bridge seems inactive:
    - Inspect %LocalAppData%\Link2AutoIt\LinkHost.log (it captures the first 5KB of every session for easy debugging).
    - Ensure the Firefox Extension is enabled in about:addons.
 
->💡 **Debugging Tip:** 
+>💡 **Debugging Tip:**  
 If you need to capture a fresh trace for troubleshooting, 
 simply delete the LinkHost.log file manually. 
 The system will automatically begin a 
