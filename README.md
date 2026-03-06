@@ -9,7 +9,7 @@ The project uses **Native Messaging** combined with **Shared Memory (IPC)**. Thi
 
 1. **Firefox Extension**: Monitors mouse events and sends JSON payloads.
 2. **LinkHost.exe**: A tiny relay that writes data to Shared Memory.
-3. **Proxy.exe**: The memory "anchor" that keeps the IPC bridge alive.
+3. **L2A_Proxy.exe**: The memory "anchor" that keeps the IPC bridge alive.
 4. **Listener.au3**: Your custom script that reacts to the incoming data (e.g., displaying tooltips, logging, or automating tasks).
 
 ## 🛠 Installation
