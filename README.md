@@ -12,7 +12,7 @@ The project uses **Native Messaging** combined with **Shared Memory (IPC)**. Thi
 3. **L2A_Proxy.exe**: The memory "anchor" that keeps the IPC bridge alive.
 4. **Listener.au3**: Your custom script that reacts to the incoming data (e.g., displaying tooltips, logging, or automating tasks).
 
-## 🚀 Key Features (v1.1.0)
+## 🚀 Key Features (v3.0.5)
 - Sub-millisecond Latency: Uses Windows Shared Memory (IPC) for instant data transfer.
 - Smart Logging: LinkHost automatically caps log files at 5KB to prevent disk bloat.
 - Zero-CPU Proxy: L2A_Proxy.exe acts as a silent memory anchor with 0% resource impact.
