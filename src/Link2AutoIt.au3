@@ -27,6 +27,7 @@ Func _L2A_Init() ; initialization to ensure Proxy is running
 	If Int($hMapping) = 0 Then
 		__DW("L2A: Proxy not detected. Attempting to start..." & @CRLF)
 		If Not ProcessExists($L2A_PROXY_EXE) Then
+			FileDelete($L2A_INSTALL_DIR & "LinkHost.log")
 			Local $sProxyPath = $L2A_INSTALL_DIR & $L2A_PROXY_EXE
 			If FileExists($sProxyPath) Then
 				Run($sProxyPath, $L2A_INSTALL_DIR, @SW_HIDE)
@@ -179,11 +180,9 @@ Func __DW($sString, $iErrorNoLineNo = 1, $iLine = @ScriptLineNumber, $iError = @
 EndFunc   ;==>__DW
 ;---------------------------------------------------------------------------------------
 Func _Cleanup()
+	 __DW("L2A: Cleaning up and closing Proxy..." & @CRLF)
     If ProcessExists($L2A_PROXY_EXE) Then
         ProcessClose($L2A_PROXY_EXE)
-		ProcessWaitClose ($L2A_PROXY_EXE, 5 )
     EndIf
-	 __DW("L2A: Cleaning up and closing Proxy..." & @CRLF)
-	FileDelete($L2A_INSTALL_DIR & "LinkHost.log")
 EndFunc   ;==>_Cleanup
 ;---------------------------------------------------------------------------------------
