@@ -22,7 +22,7 @@ Func _Uninstall()
     If $iConfirm <> $IDYES Then Exit
 
     ; Kill running processes
-    ProcessClose("Proxy.exe")
+    ProcessClose("L2A_Proxy.exe")
     ProcessClose("LinkHost.exe")
     _Log("Processes stopped (if they were running).")
 

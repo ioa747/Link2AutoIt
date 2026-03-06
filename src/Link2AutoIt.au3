@@ -1,3 +1,11 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Res_Comment=Link2AutoIt.au3: is part of Link2AutoIt (The UDF that read metadata from L2A_Proxy)
+#AutoIt3Wrapper_Res_Description=Link2AutoIt is a high-performance bridge between Mozilla Firefox and AutoIt.
+#AutoIt3Wrapper_Res_Fileversion=0.0.0.5
+#AutoIt3Wrapper_Res_ProductName=Link2AutoIt
+#AutoIt3Wrapper_Res_ProductVersion=0.0.0.3
+#AutoIt3Wrapper_Res_LegalCopyright=This project is open-source and available under the MIT License.
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ; Link2AutoIt.au3
 #include-once
 #include <WinAPIFiles.au3>
@@ -7,7 +15,10 @@
 Global $g__DebugInfo = True
 Global Const $L2A_MAPPING_NAME = "Local\Link2AutoIt"
 Global Const $L2A_MAPPING_SIZE = 8192
-Global Const $L2A_PROXY_EXE = "Proxy.exe"
+Global Const $L2A_PROXY_EXE = "L2A_Proxy.exe"
+Global Const $L2A_INSTALL_DIR = @LocalAppDataDir & "\Link2AutoIt\"
+
+OnAutoItExitRegister("_Cleanup")
 
 ;---------------------------------------------------------------------------------------
 Func _L2A_Init() ; initialization to ensure Proxy is running
@@ -16,20 +27,14 @@ Func _L2A_Init() ; initialization to ensure Proxy is running
 	If Int($hMapping) = 0 Then
 		__DW("L2A: Proxy not detected. Attempting to start..." & @CRLF)
 		If Not ProcessExists($L2A_PROXY_EXE) Then
-			Local $sInstallDir = @LocalAppDataDir & "\Link2AutoIt\"
-			Local $sProxyPath = $sInstallDir & $L2A_PROXY_EXE
-
-			; close any orphaned LinkHost to unlock the log
-			If ProcessExists("LinkHost.exe") Then ProcessClose("LinkHost.exe")
-			FileDelete($sInstallDir & "LinkHost.log")
-
+			Local $sProxyPath = $L2A_INSTALL_DIR & $L2A_PROXY_EXE
 			If FileExists($sProxyPath) Then
-				Run($sProxyPath, $sInstallDir, @SW_HIDE)
+				Run($sProxyPath, $L2A_INSTALL_DIR, @SW_HIDE)
 				ProcessWait($L2A_PROXY_EXE, 5) ; Increased wait time to 5s
 				Sleep(1000) ; Give it a full second to initialize memory
 				__DW("L2A: Proxy started successfully." & @CRLF)
 			Else
-				__DW("L2A: Fatal Error - Proxy.exe missing at: " & $sProxyPath & @CRLF)
+				__DW("L2A: Fatal Error - L2A_Proxy.exe missing at: " & $sProxyPath & @CRLF)
 				Return SetError(2, 0, False)
 			EndIf
 		EndIf
@@ -172,4 +177,13 @@ Func __DW($sString, $iErrorNoLineNo = 1, $iLine = @ScriptLineNumber, $iError = @
 	; Remarks: The @error and @extended are not set on return leaving them as they were before calling.
 	Return SetError($iError, $iExtended, $iReturn)
 EndFunc   ;==>__DW
+;---------------------------------------------------------------------------------------
+Func _Cleanup()
+    If ProcessExists($L2A_PROXY_EXE) Then
+        ProcessClose($L2A_PROXY_EXE)
+		ProcessWaitClose ($L2A_PROXY_EXE, 5 )
+    EndIf
+	 __DW("L2A: Cleaning up and closing Proxy..." & @CRLF)
+	FileDelete($L2A_INSTALL_DIR & "LinkHost.log")
+EndFunc   ;==>_Cleanup
 ;---------------------------------------------------------------------------------------

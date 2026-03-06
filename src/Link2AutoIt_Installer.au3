@@ -11,7 +11,7 @@
 Global Const $APP_NAME = "Link2AutoIt"
 Global Const $INSTALL_DIR = @LocalAppDataDir & "\" & $APP_NAME
 Global Const $REG_KEY = "HKEY_CURRENT_USER\Software\Mozilla\NativeMessagingHosts\com.link2autoit.bridge"
-Global Const $PROXY_EXE = "Proxy.exe"
+Global Const $PROXY_EXE = "L2A_Proxy.exe"
 Global Const $HOST_EXE = "LinkHost.exe"
 Global Const $ADDON_XPI = "link2autoit.xpi"
 Global Const $App_JSON = "com.link2autoit.bridge.json"

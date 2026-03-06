@@ -1,11 +1,19 @@
-; LinkHost.au3
 #NoTrayIcon
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=..\Icons\LinkHost.ico
 #AutoIt3Wrapper_Outfile_x64=LinkHost.exe
 #AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Change2CUI=y
+#AutoIt3Wrapper_Res_Comment=LinkHost.exe: is part of Link2AutoIt (A tiny relay that catches the browser's message and writes it to Shared Memory)
+#AutoIt3Wrapper_Res_Description=Link2AutoIt is a high-performance bridge between Mozilla Firefox and AutoIt.
+#AutoIt3Wrapper_Res_Fileversion=0.0.0.5
+#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
+#AutoIt3Wrapper_Res_ProductName=Link2AutoIt
+#AutoIt3Wrapper_Res_ProductVersion=0.0.0.3
+#AutoIt3Wrapper_Res_LegalCopyright=This project is open-source and available under the MIT License.
+#AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+; LinkHost.au3
 
 #include <File.au3>
 #include <WinAPIFiles.au3>
@@ -14,8 +22,6 @@
 ; Shared Memory Settings
 Global Const $sMappingName = "Local\Link2AutoIt"
 Global Const $iMappingSize = 8192
-
-Global $g_bFileWriteLog = True
 
 _WL("--- LinkHost Triggered ---")
 
@@ -57,7 +63,7 @@ If BinaryLen($bRaw) > 4 Then
 			_WinAPI_UnmapViewOfFile($pAddress)
 			_WinAPI_CloseHandle($hMapping)
 		Else
-			_WL("Error: Proxy mapping not found! Ensure Proxy.exe is running.")
+			_WL("Error: Proxy mapping not found! Ensure L2A_Proxy.exe is running.")
 		EndIf
 
 	Else
@@ -106,6 +112,8 @@ EndFunc
 
 ; Log File (for debugging)
 Func _WL($sMsg)
-	If Not $g_bFileWriteLog Then Return
-	_FileWriteLog(@ScriptDir & "\LinkHost.log", "PID:" & @AutoItPID & " " & $sMsg & @CRLF)
+    Local $sLogPath = @ScriptDir & "\LinkHost.log"
+    ; If the log exceeds 5KB, stop writing.
+    If FileGetSize($sLogPath) > 5 * 1024 Then Return
+    _FileWriteLog($sLogPath, "PID:" & @AutoItPID & " " & $sMsg)
 EndFunc   ;==>_WL
